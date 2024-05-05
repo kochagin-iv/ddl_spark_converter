@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS test.employee (
+    first_name NVARCHAR, 
+    salary_1 DECIMAL(38, 10), 
+    empID VARBINARY, 
+    salary NVARCHAR, 
+);

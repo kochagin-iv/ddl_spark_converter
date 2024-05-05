@@ -2,11 +2,11 @@ import pytest
 
 from ddl_spark_converter.main_converter import DatabaseConverter
 
-SOURCE_DB = "oracle"
-TARGET_DB = "mysql"
+SOURCE_DB = "mssql"
+TARGET_DB = "oracle"
 
-test_ddls = open("tests/input_ddl/oracle_mysql/simple_create.txt", "r")
-expected_ddls = open("tests/output_ddl/oracle_mysql/simple_create.txt", "r")
+test_ddls = open("tests/input_ddl/mssql_oracle/simple_create.txt", "r")
+expected_ddls = open("tests/output_ddl/mssql_oracle/simple_create.txt", "r")
 
 test_ddls = [test_ddl for test_ddl in test_ddls.read().split("\n\n")]
 expected_ddls = [test_ddl for test_ddl in expected_ddls.read().split("\n\n")]

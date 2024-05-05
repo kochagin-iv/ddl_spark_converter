@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS test.employee (
+    first_name LONGTEXT, 
+    salary_1 DECIMAL(38, 10), 
+    empID BLOB, 
+    salary LONGTEXT, 
+);

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS test.employee (
+    first_name VARCHAR2,
+    salary_1 NUMBER ENCRYPT,
+    empID Blob ENCRYPT NO SALT,
+    salary NVARCHAR2 ENCRYPT USING '3DES168');
+);
