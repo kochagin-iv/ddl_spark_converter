@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "ddl_spark_converter"
+version = "0.1.0"
+description = "Project for converting DDLs from DBMS via spark"
+authors = ["Ilya Kochagin <ilyakochagin@yandex.ru>"]
+readme = "README.md"
+packages = [
+    { include = "tests", format = "sdist" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+simple-ddl-parser = "^1.1.0"
+pytest = "^8.2.0"
+pytest-cov = "^5.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

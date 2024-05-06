@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS test.Persons (
+    PersonID FLOAT,
+    LastName varchar,
+    Money DECIMAL(5),
+    time TIME,
+    point_col point,
+);
