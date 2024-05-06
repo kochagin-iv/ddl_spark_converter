@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS test.Persons (
     LastName CLOB,
     Money NUMBER(5, 0),
     time TIMESTAMP(6),
-    xml CLOB,
+    point_col BLOB,
 );

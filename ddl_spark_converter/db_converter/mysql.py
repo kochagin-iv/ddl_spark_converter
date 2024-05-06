@@ -64,8 +64,8 @@ class MYSQLConverter(IConverter):
                 raise Exception(
                     f"Spark datatype {spark_full_type_name} cannot be converted to MYSQL datatypes"
                 )
-
-            mysql_text_ddl += f"\t{column['name']} {mysql_full_type_name}, \n"
+            sep = " " * 4
+            mysql_text_ddl += f"{sep}{column['name']} {mysql_full_type_name},\n"
 
         mysql_text_ddl += ");"
 

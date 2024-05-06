@@ -10,11 +10,16 @@ CREATE TABLE IF NOT EXISTS test.Persons (
 );
 """
 
-d = DatabaseConverter(source_db="mssql", target_db="oracle", ddl_text=ddl)
+converter = DatabaseConverter(source_db="mssql", target_db="oracle", ddl_text=ddl)
 
+result_ddl = converter.run()
 
-print(d.run())
+expected_ddl = """CREATE TABLE IF NOT EXISTS test.Persons (
+    PersonID NUMBER(19, 4),
+    LastName CLOB,
+    Money NUMBER(5, 0),
+    time TIMESTAMP(6),
+    xml CLOB,
+);"""
 
-
-# result = DDLParser(ddl).run(json_dump=True, output_mode="oracle")
-# print(result)
+assert result_ddl == expected_ddl

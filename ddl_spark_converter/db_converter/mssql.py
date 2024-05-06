@@ -31,6 +31,7 @@ class MSSQLConverter(IConverter):
         return spark_table_info
 
     def convert_from_spark_ddl(self, spark_table_info):
+        # TODO: sep='\t' или sep= ' ' * 4
 
         mssql_table_info = spark_table_info
 
@@ -55,7 +56,8 @@ class MSSQLConverter(IConverter):
                 raise Exception(
                     f"Spark datatype {spark_full_type_name} cannot be converted to MSSQL datatypes"
                 )
-            mssql_text_ddl += f"\t{column['name']} {mssql_full_type_name}, \n"
+            sep = " " * 4
+            mssql_text_ddl += f"{sep}{column['name']} {mssql_full_type_name},\n"
 
         mssql_text_ddl += ");"
 

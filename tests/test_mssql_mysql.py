@@ -22,7 +22,4 @@ def test_simple_create(test_ddl, expected_ddl):
 
     result_ddl = d.run()
 
-    print(result_ddl.replace("\t", "    "))
-    print(expected_ddl.replace("\t", " "))
-
-    assert result_ddl.replace("\t", "    ") == expected_ddl.replace("\t", " ")
+    assert result_ddl == expected_ddl

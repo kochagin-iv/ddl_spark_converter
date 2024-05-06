@@ -53,8 +53,8 @@ class OracleConverter(IConverter):
                 raise Exception(
                     f"Spark datatype {spark_full_type_name} cannot be converted to Oracle datatypes"
                 )
-
-            oracle_text_ddl += f"\t{column['name']} {oracle_full_type_name}, \n"
+            sep = " " * 4
+            oracle_text_ddl += f"{sep}{column['name']} {oracle_full_type_name},\n"
 
         oracle_text_ddl += ");"
 
