@@ -1,4 +1,4 @@
-# DDL_SPARK_CONVERTER
+# <p align="center"> DDL_SPARK_CONVERTER </p>
 
 ## Проект для конвертации DDL таблиц между разными СУБД при помощи Spark
 
