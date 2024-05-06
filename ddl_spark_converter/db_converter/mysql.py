@@ -15,7 +15,7 @@ class MYSQLConverter(IConverter):
         self.to_spark_converter = mysql_spark_datatypes
         self.to_mysql_converter = spark_mysql_datatypes
 
-    def convert_to_spark_ddl(self, ddl_text: Dict[str, Any]) -> Dict[str, Any]:
+    def convert_to_spark_ddl(self, mysql_ddl_dict: Dict[str, Any]) -> Dict[str, Any]:
         """
         Функция изменяет типы данных MYSQL на соответствующие типы данных Spark
 
@@ -24,9 +24,9 @@ class MYSQLConverter(IConverter):
         :return: Тот же словарь ddl_text с доп. полем full_type_name - имя типа данных Spark
 
         """
-        spark_table_info = ddl_text
+        spark_ddl_dict = mysql_ddl_dict
 
-        for i, column in enumerate(spark_table_info["columns"]):
+        for i, column in enumerate(spark_ddl_dict["columns"]):
 
             mysql_full_type_name = generate_full_type_name(column=column)
             spark_full_type_name = self.to_spark_converter.get(mysql_full_type_name)
@@ -36,12 +36,21 @@ class MYSQLConverter(IConverter):
                     f"MYSQL datatype {mysql_full_type_name} cannot be converted to Spark datatypes"
                 )
 
-            spark_table_info["columns"][i]["full_type_name"] = spark_full_type_name
-        return spark_table_info
+            spark_ddl_dict["columns"][i]["full_type_name"] = spark_full_type_name
+        return spark_ddl_dict
 
-    def convert_from_spark_ddl(self, spark_table_info):
+    def convert_from_spark_ddl(self, spark_ddl_dict: Dict[str, Any]) -> str:
+        # TODO: sep='\t' или sep= ' ' * 4, наверное, стоит сделать параметром
+        """
+        Функция изменяет типы данных Spark на соответствующие типы данных MYSQL
 
-        mysql_table_info = spark_table_info
+        :param: spark_ddl_dict - ddl таблицы после обработки функцией convert_to_spark_ddl(передается в виде словаря)
+
+        :return: DDL MYSQL таблицы в виде строки
+
+        """
+
+        mysql_table_info = spark_ddl_dict
 
         mysql_table_name = mysql_table_info["table_name"]
 

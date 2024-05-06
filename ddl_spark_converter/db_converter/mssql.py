@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from ddl_spark_converter.db_converter.IConverter import IConverter
 from ddl_spark_converter.db_converter.utils import generate_full_type_name
 from ddl_spark_converter.db_from_spark_datatype_conversion_info.mssql import (
@@ -9,14 +11,30 @@ from ddl_spark_converter.db_to_spark_datatype_conversion_info.mssql import (
 
 
 class MSSQLConverter(IConverter):
+    """
+    Класс конвертера для MSSQL
+
+    Имеет 2 функции
+        1) convert_to_spark_ddl - переводит типы данных MSSQL в типы данных Spark
+        2) convert_to_spark_ddl - переводит типы данных Spark в типы данных MSSQL
+    """
+
     def __init__(self):
         self.to_spark_converter = mssql_spark_datatypes
         self.to_mssql_converter = spark_mssql_datatypes
 
-    def convert_to_spark_ddl(self, ddl_text):
-        spark_table_info = ddl_text
+    def convert_to_spark_ddl(self, mssql_ddl_dict: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Функция изменяет типы данных MSSQL на соответствующие типы данных Spark
 
-        for i, column in enumerate(spark_table_info["columns"]):
+        :param: mssql_ddl_dict - ddl таблицы после обработки парсером(передается в виде словаря)
+
+        :return: Тот же словарь mssql_ddl_dict с доп. полем full_type_name - имя типа данных Spark
+
+        """
+        spark_ddl_dict = mssql_ddl_dict
+
+        for i, column in enumerate(spark_ddl_dict["columns"]):
 
             mssql_full_type_name = generate_full_type_name(column=column)
             spark_full_type_name = self.to_spark_converter.get(mssql_full_type_name)
@@ -26,14 +44,22 @@ class MSSQLConverter(IConverter):
                     f"MSSQL datatype {mssql_full_type_name} cannot be converted to Spark datatypes"
                 )
 
-            spark_table_info["columns"][i]["full_type_name"] = spark_full_type_name
+            spark_ddl_dict["columns"][i]["full_type_name"] = spark_full_type_name
 
-        return spark_table_info
+        return spark_ddl_dict
 
-    def convert_from_spark_ddl(self, spark_table_info):
-        # TODO: sep='\t' или sep= ' ' * 4
+    def convert_from_spark_ddl(self, spark_ddl_dict: Dict[str, Any]) -> str:
+        # TODO: sep='\t' или sep= ' ' * 4, наверное, стоит сделать параметром
+        """
+        Функция изменяет типы данных Spark на соответствующие типы данных MSSQL
 
-        mssql_table_info = spark_table_info
+        :param: spark_ddl_dict - ddl таблицы после обработки функцией convert_to_spark_ddl(передается в виде словаря)
+
+        :return: DDL MSSQL таблицы в виде строки
+
+        """
+
+        mssql_table_info = spark_ddl_dict
 
         mssql_table_name = mssql_table_info["table_name"]
 

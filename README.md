@@ -15,6 +15,8 @@
 * CLICKHOUSE
 * HIVE
 
+Пока поддерживается только конвертация типов между СУБД и не поддерживаются переносы аттрибутов DDL типа партиционирования, location, компрессии.
+
 ## Пример работы
 ```python
 from ddl_spark_converter.main_converter import DatabaseConverter
